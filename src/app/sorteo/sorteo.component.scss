@@ -1,0 +1,493 @@
+.scrollWrapper {
+    background-image: linear-gradient(180deg, #C92D64 0%, #E25929 100%)!important;
+    header{
+        position: relative;
+        box-sizing: border-box;
+        min-width: 1410px;
+        position: relative;
+        padding-left: calc(60vw - 800px);
+        padding-right: calc(60vw - 800px);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background: rgba(51, 51, 51, 0.5);
+        .regresar{
+            float: left;
+            font-size: 15px;
+            color: #fff;
+            position: relative;
+            top: 10px;
+            img{
+                width: 20px;
+                margin-right: 10px;
+            }
+        }
+        .logotipo{
+            margin: auto;
+            display: block;
+            width: 110px;
+        }
+    }
+    .box_container{
+        position: relative;
+        box-sizing: border-box;
+        background-image: linear-gradient(180deg, #C92D64 0%, #E25929 100%)!important;
+        min-width: 1410px;
+        position: relative;
+        padding-left: calc(60vw - 800px);
+        padding-right: calc(60vw - 800px);
+        padding-top: 10px;
+        padding-bottom: 80px;
+        .menu{
+            float: left;
+            width: 100%;
+            padding: 30px 0px;
+            ul{
+                list-style: none;
+                float: left;
+                width: 100%;
+                li{
+                    float: right;
+                    margin-left: 40px;
+                    font-size: 20px;
+                    color: #fff;
+                    font-weight: 100;
+                    padding-bottom: 5px;
+                }
+                .active{
+                    border-bottom:  4px solid #0AD3D1;
+                }
+            }
+        }
+        h1{
+            font-weight: 900;
+            font-size: 50px;
+            color: #fff;
+        }
+        p{
+            color: #fff;
+            float: left;
+            width: 100%;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #fff;
+        }
+        h2{
+            float: left;
+            width: 100%;
+            color: #fff;
+            font-weight: 300; 
+            font-size: 20px;
+            padding-top: 20px;
+            padding-left: 30px;
+        }
+        h3{
+            float: left;
+            width: 100%;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 300;
+            border-top: 1px solid #fff;
+            padding-top: 30px;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        .box_paquetes{
+            float: left;
+            width: 100%;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            .paquete{
+                float: left;
+                background: #D8D8D8;
+                border-radius: 6px;
+                margin: 15px;
+                position: relative;
+                cursor: pointer;
+                .numero{
+                    float: left;
+                    background-image: linear-gradient(180deg, #BD2FA2 0%, #23ADA0 100%);
+                    border-radius: 6px 0 0 6px;
+                    color: #fff;
+                    font-size: 35px;
+                    padding: 42px 15px;
+                    width: 50px;
+                    text-align: center;
+                    height: 105px;
+                }
+                .rosa{
+                    background-image: linear-gradient(225deg, #32C5FF 0%, #B620E0 51%, #F7B500 100%);
+                }
+                .verde{
+                    background-image: linear-gradient(180deg, #6DD400 0%, #F7B500 100%);
+                }
+                .boleto{
+                    float: left;
+                    color: #757575;
+                    font-size: 35px;
+                    font-weight: 700;
+                    padding: 15px;
+                    width: calc(100% - 50px);
+                }
+                .precio{
+                    color: #757575;
+                    font-size: 11px;
+                    font-weight: 700;
+                    margin-left: 15px;
+                    float: left;
+                    width: 120px;
+                    strong{
+                        float: left;
+                        width: 100%;
+                        font-size: 15px;
+                        font-weight: 900;
+                    }
+                    img{
+                        width: 21px;
+                        margin-right: 5px;
+                        position: relative;
+                        top: -2px;
+                    }
+                }
+                .fecha{
+                    color: #757575;
+                    font-size: 11px;
+                    font-weight: 700;
+                    margin-left: 15px;
+                    float: left;
+                    width: 140px;
+                    strong{
+                        float: left;
+                        width: 100%;
+                        font-size: 15px;
+                        font-weight: 900;
+                    }
+                    img{
+                        width: 21px;
+                        margin-right: 5px;
+                        position: relative;
+                        top: -2px;
+                    }
+                }
+                .check{
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    right: 10px;
+                    top: 10px;
+                    background: #fff;
+                    border: 2px solid #979797;
+                    border-radius: 100%;
+                }
+            }
+            .paquete.active{
+                .check{
+                    background: #757575;
+                }
+            }
+        }
+        .btn_maquinita{
+            background: #0AD3D1;
+            margin: auto;
+            display: block;
+            margin-bottom: 60px;
+            font-weight: 700;
+            padding: 10px 30px;
+            border-radius: 5px;
+            position: relative;
+            font-size: 18px;
+            height: auto;
+            img{
+                position: absolute;
+                width: 60px;
+                right: -45px;
+                top: -10px;
+            }
+        }
+        .box_buscar{
+            width: 100%;
+            float: left;
+            display: flow-root;
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 2px 5px 0 rgba(195,195,195,0.50);
+            border-radius: 5px;
+            margin-bottom: 50px;
+            .boletosSelec{
+                float: left;
+                width: 100%;
+                font-size: 20px;
+                text-align: left;
+                i{
+                    border: 1px solid #c9c9c9;
+                    font-style: initial;
+                    border-radius: 5px;
+                    padding: 5px 15px;
+                    margin: 0px 10px;
+                }
+            }
+            .buscar{
+                float: left;
+                margin-bottom: 0px;
+                border-radius: 0px;
+            }
+            .btn{
+                margin: auto;
+                float: right;
+                border-radius: 5px;
+                background: #3d3b50;
+                color: #fff;
+                font-size: 16px;
+                height: 40px;
+                position: relative;
+                top: -10px;
+            }
+        }
+        .btn_pagar{
+            margin: auto;
+            float: left;
+            width: 200px;
+            border-radius: 30px;
+            background: var(--rosa);
+            color: #fff;
+            font-size: 16px;
+            height: 40px;
+            display: block;
+        }
+        .box_boletos{
+            float: left;
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+            z-index: 10;
+            position: relative;
+            top: -120px;
+            padding-bottom: 50px;
+            .boleto{
+                width: 65px;
+                background: rgb(220, 220, 220);
+                padding: 5px 5px;
+                margin: 5px 5px;
+                border-radius: 30px;
+                color: #000;
+                font-size: 18px;
+                text-align: center;
+                font-weight: 700;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+            .boleto.active{
+                background: var(--rosa);
+                color: #fff;
+            }
+            .boleto.vendido{
+                background: #333;
+                color: #333;
+            }
+        }
+        .box_boletosSelect{
+            float: left;
+            width: 100%;
+            margin-bottom: 15px;
+            margin-top: 15px;
+            .boleto{
+                width: 90px;
+                background: rgb(220, 220, 220);
+                padding: 5px 5px;
+                margin: 5px 5px;
+                border-radius: 30px;
+                color: #000;
+                font-size: 18px;
+                text-align: center;
+                font-weight: 700;
+                float: left;
+                cursor: pointer;
+                img{
+                    width: 20px;
+                    margin-left: 5px;
+                }
+            }
+            .boleto.active{
+                background: var(--rosa);
+                color: #fff;
+            }
+        }
+    }
+    .blanco{
+        background: #ffff!important;
+        padding-top: 0px;
+    }
+}
+.modal-header{
+    background: var(--rosa);
+    text-align: center;
+    color: #fff;
+    h4{
+        width: 100%;
+        font-size: 25px;
+        font-weight: 600;
+    }
+}
+.modal-body{
+    background: #fff;
+    .form-group{
+        position: relative;
+        z-index: 1;
+        label{
+            text-align: center;
+            float: left;
+            width: 100%;
+            font-size: 20px;
+        }
+        select{
+            font-size: 20px;
+            text-align: center;
+            width: 180px;
+            margin: auto;
+        }
+    }
+    .animation{
+        margin: auto;
+        width: 100%;
+        position: relative;
+        z-index: 0;
+    }
+    .btn_generar{
+        text-align: center;
+        float: left;
+        width: 100%;
+        font-size: 22px;
+        padding: 20px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+    .box_boletosSelect{
+        float: left;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+        margin-top: -95px;
+        z-index: 1;
+        position: relative;
+        .boleto{
+            width: 90px;
+            background: rgb(220, 220, 220);
+            padding: 5px 5px;
+            margin: 5px 5px;
+            border-radius: 30px;
+            color: #000;
+            font-size: 18px;
+            text-align: center;
+            font-weight: 700;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            img{
+                width: 20px;
+                margin-left: 5px;
+            }
+        }
+        .active{
+            background: var(--rosa);
+            color: #fff;
+        }
+                
+    }
+    
+    .btn_confirmar{
+        background: var(--rosa);
+        color: #fff;
+        border-radius: 30px;
+        padding: 10px 30px;
+        margin: auto;
+        display: block;
+        margin-top: 20px;
+    }
+    .text{
+        text-align: center;
+        width: 100%;
+        float: left;
+        margin-top: 15px;
+    }
+    .datosCliente{
+        label{
+            font-size: 16px;
+            margin-bottom: 0px;
+            margin-top: 15px;
+        }
+        .form-group{
+            margin-bottom: 10px;
+        }
+    }
+}
+.cuponUso{
+    float: right;
+    color: #fff;
+    margin-right: 20px;
+    background: #c92e64;
+    padding: 9px 22px;
+    margin-top: -10px;
+    border-radius: 30px;
+    font-size: 14px;
+}
+.sorteos{
+    float: left;
+    width: 100%;
+    list-style: none;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding: 0px;
+   
+    li{
+        float: left;
+        background: #d8d8d8;
+        padding: 20px 50px 20px 20px;
+        border-radius: 5px;
+        font-size: 17px;
+        position: relative;
+        margin: 10px;
+        .nonbre{
+            text-align: left;
+        }
+        .check{
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            right: 10px;
+            top: 0px;
+            bottom: 0px;
+            margin: auto;
+            background: #fff;
+            border: 2px solid #979797;
+            border-radius: 100%;
+        }
+        .check.active{
+            background: #757575;
+        }
+    }
+}
+
+.modalCupon{
+    h4{
+        text-align: center;
+        font-size: 30px;
+        font-weight: 700;
+    }
+    p{
+        text-align: center;
+    }
+    input{
+        text-align: center;
+    }
+    img{
+        width: 100%;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+}

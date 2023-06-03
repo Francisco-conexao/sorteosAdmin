@@ -1,0 +1,322 @@
+<div class="card">
+  <div class="box_divider">
+    <span class="seleccionados">Clientes</span>
+    <span class="seleccionados">{{ clientes.length }}</span>
+    <button class="btn btn_cupones" (click)="openModalCupones(cuponesModal)">
+      Cupones
+    </button>
+    <button
+      class="btn btn_cupones"
+      style="margin-right: 10px"
+      (click)="openModalSorteos(sorteosModal)"
+    >
+      Sorteos
+    </button>
+    <div class="buscar">
+      <input
+        class="form-control"
+        (ngModelChange)="getItems($event)"
+        [(ngModel)]="buscar"
+        type="text"
+        placeholder="Buscar..."
+        name="buscar"
+      />
+      <img src="assets/icons/salir.png" (click)="getItems(null)" />
+    </div>
+  </div>
+  <div class="box_table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>NOMBRE</th>
+          <th>CELULAR</th>
+          <th>CORREO</th>
+          <th>ESTADO</th>
+          <th>BOLETOS</th>
+          <th>TOTAL</th>
+          <th>FECHA</th>
+          <th>PAGADO</th>
+          <th>TIPO PAGO</th>
+          <th>SORTEO</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td
+            (click)="openModal(boletosModal, cliente)"
+            style="text-align: center"
+          >
+            {{ cliente.id }}
+          </td>
+          <td (click)="openModal(boletosModal, cliente)">
+            {{ cliente.nombre }}
+          </td>
+          <td
+            (click)="openModal(boletosModal, cliente)"
+            style="text-align: center"
+          >
+            {{ cliente.celular }}
+          </td>
+          <td (click)="openModal(boletosModal, cliente)">
+            {{ cliente.correo }}
+          </td>
+          <td (click)="openModal(boletosModal, cliente)">
+            {{ cliente.estado }}
+          </td>
+          <td
+            (click)="openModal(boletosModal, cliente)"
+            style="text-align: center"
+          >
+            {{ cliente.boletos }}
+          </td>
+          <td
+            (click)="openModal(boletosModal, cliente)"
+            style="text-align: right"
+          >
+            {{ cliente.total | currency }}
+          </td>
+          <td
+            (click)="openModal(boletosModal, cliente)"
+            style="text-align: center"
+          >
+            {{ cliente.fecha | date : "dd-MM-yyyy" }}
+          </td>
+          <td style="text-align: center">{{ cliente.pagado ? "SI" : "NO" }}</td>
+          <td style="text-align: center">{{ cliente.tipo_pago }}</td>
+          <td style="text-align: center">{{ cliente.sorteo }}</td>
+          <td>
+            <button
+              class="btn btn_aceptar"
+              *ngIf="!cliente.pagado"
+              style="width: 100%"
+              (click)="pagoManual(cliente)"
+            >
+              Pagado
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <form #form="ngForm"></form>
+</div>
+
+<ng-template #boletosModal let-modal modal-sm>
+  <div class="modal-header">
+    <h4 class="modal-title">Boletos de {{ clienteSelect.nombre }}</h4>
+  </div>
+  <div class="modal-body">
+    <ul class="boletosList">
+      <li *ngFor="let boleto of boletos">{{ boleto.boleto }}</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn_cancelar"
+      (click)="modal.close('Close click')"
+    >
+      Cerrar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #cuponesModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Cupones</h4>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" class="datosCliente">
+      <div class="row">
+        <div class="from-group col-lg-6">
+          <label>Cupon</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="cupon.cupon"
+            name="cupon"
+            required
+          />
+        </div>
+        <div class="from-group col-lg-3">
+          <label>Boletos</label>
+          <select
+            class="form-control"
+            [(ngModel)]="cupon.boletos"
+            name="boletos"
+            required
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </div>
+        <div class="col-lg-3" style="padding-top: 27px">
+          <button
+            class="btn btn_confirmar"
+            (click)="guardarCupon()"
+            [disabled]="!form.valid"
+          >
+            Crear
+          </button>
+        </div>
+      </div>
+    </form>
+    <table class="table" style="margin-top: 20px; border: 1px solid #e5eaef">
+      <thead>
+        <tr>
+          <th>CUPON</th>
+          <th>BOLETOS</th>
+          <th>PEDIDO</th>
+          <th>FECHA</th>
+          <th>ESTATUS</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cupon of cupones">
+          <td>{{ cupon.cupon }}</td>
+          <td style="text-align: center">{{ cupon.boletos }}</td>
+          <td style="text-align: center">{{ cupon.id_pedido }}</td>
+          <td style="text-align: center">{{ cupon.fecha }}</td>
+          <td style="text-align: center">
+            {{ cupon.estatus ? "Usado" : "Sin usar" }}
+          </td>
+          <td style="text-align: center">
+            <img
+              src="assets/omitir.png"
+              width="20px"
+              (click)="eliminarCupon(cupon)"
+              *ngIf="!cupon.estatus"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn_cancelar"
+      (click)="modal.close('Close click')"
+    >
+      Cerrar
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #sorteosModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Sorteos</h4>
+  </div>
+  <div class="modal-body">
+    <form #form2="ngForm" class="datosCliente">
+      <div class="row">
+        <div class="from-group col-lg-12">
+          <label>Sorteo</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="sorteo.nombre"
+            name="nombre"
+            required
+          />
+        </div>
+      </div>
+      <div class="row" style="margin-top: 10px">
+        <div class="from-group col-lg-3">
+          <label>Precio 1</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="sorteo.precio1"
+            name="precio1"
+            required
+          />
+        </div>
+        <div class="from-group col-lg-3">
+          <label>Precio 2</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="sorteo.precio2"
+            name="precio2"
+            required
+          />
+        </div>
+        <div class="from-group col-lg-3">
+          <label>Precio 3</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="sorteo.precio3"
+            name="precio3"
+            required
+          />
+        </div>
+        <div class="from-group col-lg-3">
+          <label>Precio 4</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="sorteo.precio4"
+            name="precio4"
+            required
+          />
+        </div>
+        <div class="col-lg-3" style="padding-top: 27px">
+          <button
+            class="btn btn_confirmar"
+            (click)="crearSorteo()"
+            [disabled]="!form2.valid"
+          >
+            Crear
+          </button>
+        </div>
+      </div>
+    </form>
+    <table class="table" style="margin-top: 20px; border: 1px solid #e5eaef">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>SORTEO</th>
+          <th>PRECIO1</th>
+          <th>PRECIO2</th>
+          <th>PRECIO3</th>
+          <th>PRECIO4</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sorteo of sorteos">
+          <td style="text-align: center">{{ sorteo.id }}</td>
+          <td>{{ sorteo.nombre }}</td>
+          <td style="text-align: center">{{ sorteo.precio1 | currency }}</td>
+          <td style="text-align: center">{{ sorteo.precio2 | currency }}</td>
+          <td style="text-align: center">{{ sorteo.precio3 | currency }}</td>
+          <td style="text-align: center">{{ sorteo.precio4 | currency }}</td>
+          <td style="text-align: center">
+            <img
+              src="assets/omitir.png"
+              width="20px"
+              (click)="eliminarSorteo(sorteo)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn_cancelar"
+      (click)="modal.close('Close click')"
+    >
+      Cerrar
+    </button>
+  </div>
+</ng-template>

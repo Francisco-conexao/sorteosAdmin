@@ -1,0 +1,190 @@
+<div class="scrollWrapper">
+    <header>
+        <a class="regresar"><img src="assets/regresar.png"> Regresar a home</a>
+        <img class="logotipo" src="assets/logotipo.png" alt="logotipo">
+    </header>
+    <div class="box_container">
+
+        <div class="menu">
+            <ul>
+                <li>Tienda</li>
+                <li>Productos</li>
+                <li class="active">Sorteo</li>
+            </ul>
+        </div>
+        <h1>Selecciona tu sorteo</h1>
+        <!-- <swiper
+            [slidesPerView]="3"
+            [spaceBetween]="50"
+            >
+            <ng-template swiperSlide>Slide 1</ng-template>
+            <ng-template swiperSlide>Slide 2</ng-template>
+            <ng-template swiperSlide>Slide 3</ng-template>
+        </swiper> -->
+        <ul class="sorteos">
+            <li *ngFor="let sorteo of sorteos" (click)="selecSorteo(sorteo)">
+                <span class="nombre">{{sorteo.nombre}}</span>
+                <span class="check {{(sorteo.select)?'active':''}}"></span>
+            </li>
+        </ul>
+        <h1>Selecciona tus boletos</h1>
+        <p>Elige tus boletos o encuentra tu número de la suerte con nuestra máquinita de la surte</p>
+        <h2>Paquetes de boletos:</h2>
+        <div class="box_paquetes">
+            <div class="paquete {{(paquete.estatus == 1)?'active':''}}" (click)="elegirPaquete(paquete)"
+                *ngFor="let paquete of paquetes">
+                <span class="numero {{paquete.color}}">{{paquete.boletos}}</span>
+                <span class="boleto">BOLETOS</span>
+                <span class="precio">PRECIO <strong><img src="assets/precio.png">{{paquete.precio |
+                        currency}}</strong></span>
+                <span class="fecha">FECHA SORTEO <strong><img src="assets/fecha.png">{{paquete.fecha |
+                        date:'d-MM-yyyy'}}</strong></span>
+                <span class="check"></span>
+            </div>
+        </div>
+        <h3>Prueba la maquinita de la suerte o ingresa manualmente tus boletos</h3>
+        <button type="button" class="btn btn-sm btn_maquinita" (click)="abrirModal(content)">Maquinita de la suerte <img
+                src="assets/maquinita.png"></button>
+
+    </div>
+    <div class="box_container blanco">
+        <div class="box_boletos">
+            <div class="box_buscar">
+                <span class="boletosSelec">
+                    Tienes <i>{{boletosSelect.length}}</i> boleto{{(boletosSelect.length>1)?'s':''}} seleccionados
+
+                    <!-- <button style="margin-left: 10px;background: #C92D64;" class="btn" (click)="abrirModalCupon(modalCupon)">Tienes un cupon</button> -->
+                    <button *ngIf="!cuponValido.cupon" class="btn" (click)="abrirModalCompra(pago)"
+                        [disabled]="boletosSelect.length != paquete.boletos">Comprar Boletos</button>
+                    <button *ngIf="cuponValido.cupon" class="btn" (click)="abrirModalCompra(pago)"
+                        [disabled]="boletosSelect.length != paquete.boletos">Canjear Boletos</button>
+                    <span class="cuponUso" *ngIf="cuponValido.cupon">Cupon en uso: {{cuponValido.cupon}} Boletos:
+                        {{cuponValido.boletos}}</span>
+                </span>
+                <div class="box_boletosSelect">
+                    <span class="boleto {{(boleto.select)?'active':''}}" *ngFor="let boleto of boletosSelect">
+                        {{boleto.num}}
+                        <img src="assets/icons/omitir.png" (click)="selecNum(boleto)">
+                    </span>
+                    <!-- <button class="btn btn_pagar">Pagar</button> -->
+                </div>
+                <input type="text" class="form-control buscar" (ngModelChange)="getItems($event)" [(ngModel)]="buscar"
+                    name="buscar" placeholder="Ingresa un número ...">
+            </div>
+            <span class="boleto" [ngClass]="{'active':boleto.select,'vendido':boleto.vendido}"
+                *ngFor="let boleto of boletos" (click)="selecNum(boleto)">{{boleto.num}}</span>
+        </div>
+    </div>
+</div>
+<!-- MODALS -->
+<ng-template #content let-modal modal-sm>
+    <div class="modal-header">
+        <h4 class="modal-title">MAQUINITA DE LA SUERTE</h4>
+    </div>
+    <div class="modal-body">
+
+        <img class="animation" src="assets/animacion.gif" *ngIf="animacion == 1">
+        <img class="animation" src="assets/fin_animacion.png" *ngIf="animacion == 2">
+        <div class="box_boletosSelect" *ngIf="animacion == 2">
+            <span class="boleto active" *ngFor="let boleto of boletosSelectRandom">
+                {{boleto.num}}
+            </span>
+        </div>
+        <span *ngIf="animacion == 0 || animacion == 2" class="btn_generar" (click)="generarBoletos()">Haz click aqui
+            para generar {{paquete.boletos}} boleto{{(paquete.boletos>1)?'s':''}}</span>
+        <button class="btn btn_confirmar" *ngIf="animacion == 2" (click)="losQuiero()">Los quiero</button>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn_cancelar" (click)="modal.close('Close click')">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn_aceptar" (click)="upload()" [disabled]="archivo == null">LOS QUIERO!</button>
+    </div> -->
+</ng-template>
+
+<ng-template #pago let-modal modal-sm>
+    <div class="modal-header">
+        <h4 class="modal-title">Datos para comprar</h4>
+    </div>
+    <div class="modal-body">
+        <form #form="ngForm" class="datosCliente">
+            <div class="from-group">
+                <label>Nombre completo</label>
+                <input class="form-control" type="text" [(ngModel)]="cliente.nombre" name="nombre" required>
+            </div>
+            <div class="from-group">
+                <label>Celular (10 digitos)</label>
+                <input class="form-control" type="tel" [(ngModel)]="cliente.celular" name="celular" maxlength="10"
+                    required>
+            </div>
+            <div class="from-group">
+                <label>Email</label>
+                <input class="form-control" type="email" [(ngModel)]="cliente.email" name="email" required>
+            </div>
+            <div class="from-group">
+                <label>Estado</label>
+                <select class="form-control" [(ngModel)]="cliente.estado" name="estado" required>
+                    <option disabled selected>SELECCIONA ESTADO</option>
+                    <option value="ESTADOS UNIDOS">ESTADOS UNIDOS</option>
+                    <option value="OTRO PAIS">OTRO PAIS</option>
+                    <option value="AGUASCALIENTES">AGUASCALIENTES</option>
+                    <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
+                    <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
+                    <option value="CAMPECHE">CAMPECHE</option>
+                    <option value="CIUDAD DE MÉXICO">CIUDAD DE MÉXICO</option>
+                    <option value="COAHUILA">COAHUILA</option>
+                    <option value="COLIMA">COLIMA</option>
+                    <option value="CHIAPAS">CHIAPAS</option>
+                    <option value="CHIHUAHUA">CHIHUAHUA</option>
+                    <option value="DURANGO">DURANGO</option>
+                    <option value="ESTADO DE MÉXICO">ESTADO DE MÉXICO</option>
+                    <option value="GUANAJUATO">GUANAJUATO</option>
+                    <option value="GUERRERO">GUERRERO</option>
+                    <option value="HIDALGO">HIDALGO</option>
+                    <option value="JALISCO">JALISCO</option>
+                    <option value="MICHOACÁN">MICHOACÁN</option>
+                    <option value="MORELOS">MORELOS</option>
+                    <option value="NAYARIT">NAYARIT</option>
+                    <option value="NUEVO LEÓN">NUEVO LEÓN</option>
+                    <option value="OAXACA">OAXACA</option>
+                    <option value="PUEBLA">PUEBLA</option>
+                    <option value="QUERÉTARO">QUERÉTARO</option>
+                    <option value="QUINTANA ROO">QUINTANA ROO</option>
+                    <option value="SAN LUIS POTOSÍ">SAN LUIS POTOSÍ</option>
+                    <option value="SINALOA">SINALOA</option>
+                    <option value="SONORA">SONORA</option>
+                    <option value="TABASCO">TABASCO</option>
+                    <option value="TAMAULIPAS">TAMAULIPAS</option>
+                    <option value="TLAXCALA">TLAXCALA</option>
+                    <option value="VERACRUZ">VERACRUZ</option>
+                    <option value="YUCATÁN">YUCATÁN</option>
+                    <option value="ZACATECAS">ZACATECAS</option>
+                </select>
+            </div>
+        </form>
+        <p *ngIf="!cuponValido.cupon" class="text">Al dar click en pagar te redirigiremos a la pagina para que procedas
+            con el pago</p>
+        <button *ngIf="!cuponValido.cupon" class="btn btn_confirmar" (click)="pagar()"
+            [disabled]="!form.valid">Pagar</button>
+
+        <p *ngIf="cuponValido.cupon" class="text">Al dar click en canjear se procesaran tus boletos</p>
+        <button *ngIf="cuponValido.cupon" class="btn btn_confirmar" (click)="canjearBoletos()"
+            [disabled]="!form.valid">Canjear</button>
+    </div>
+    <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn_cancelar" (click)="modal.close('Close click')">Cancelar</button>
+        <button type="submit" class="btn btn-sm btn_aceptar" (click)="upload()" [disabled]="archivo == null">LOS QUIERO!</button>
+    </div> -->
+</ng-template>
+
+<ng-template #modalCupon let-modal modal-sm>
+    <div class="modal-body modalCupon">
+        <img src="assets/logobg.jpg">
+        <h4 class="modal-title">Bienvenido<br>tienes un cupon</h4>
+        <form #form="ngForm" class="datosCliente">
+            <p>Ingresa tu cupon para validarlo</p>
+            <div class="from-group">
+                <input class="form-control" type="text" [(ngModel)]="cupon" name="cupon" placeholder="cupon" required>
+            </div>
+        </form>
+        <button class="btn btn_confirmar" (click)="ValidarCupon()" [disabled]="!form.valid">Canjear</button>
+    </div>
+</ng-template>

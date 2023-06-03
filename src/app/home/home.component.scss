@@ -1,0 +1,71 @@
+.box_divider{
+    select{
+        float: right;
+        width: 120px;
+        height: 35px;
+        margin-right: 10px;
+    }
+    .btn_cupones{
+        float: right;
+    }
+}
+.seleccionados{
+    margin-left: 10px;
+}
+.buscar{
+    padding: 0px 0px;
+    width: 400px;
+    z-index: 20;
+    float: right;
+    position: relative;
+    margin-right: 10px;
+    input{
+        font-size: 14px;
+    }
+    img{
+        width: 15px;
+        position: absolute;
+        right: 10px;
+        top: 11px;
+        cursor: pointer;
+    }
+}
+.anular{
+    float: right;
+    padding: 4px 15px;
+    color: var(--azul);
+    cursor: pointer;
+}
+.box_crearGrupo{
+    float: left;
+    width: 100%;
+    padding: 10px 20px;
+    .inputGrupo{
+        float: right;
+        height: 35px;
+        margin-right: 10px;
+        width: 300px;
+    }
+    .btn{
+        float: right;
+    }
+}
+.boletosList{
+    list-style: none;
+    padding: 0px;
+    li{
+        float: left;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid rgb(133, 133, 133);
+        border-radius: 5px;
+        margin: 5px 0px;
+        background: #fff;
+        text-align: center;
+    }
+}
+.btn_confirmar{
+    background: var(--rosa);
+    color: #fff;
+    height: 37px;
+}
