@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'app-layout',
-    templateUrl: './layout.component.html',
-    styleUrls: ['./layout.component.scss']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-    user:any = {};
-    constructor(private router: Router) { }
+  user: any = {};
+  constructor(private router: Router) {}
 
-    ngOnInit(): void {
-        this.user = JSON.parse(localStorage.getItem('MUBOCHI'));
-    }
+  ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('SORTEOS'));
+  }
 
-    salir(){
-        localStorage.removeItem('MUBOCHI');
-        this.router.navigateByUrl('login');
-    }
+  salir() {
+    localStorage.removeItem('SORTEOS');
+    this.router.navigateByUrl('login');
+  }
 }

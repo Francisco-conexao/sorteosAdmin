@@ -36,6 +36,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    canActivate: [DashboardGuard],
   },
 ];
 

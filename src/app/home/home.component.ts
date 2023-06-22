@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private sanitizer: DomSanitizer,
     //SERVICES-----------------------------
-    private boletosSer: BoletosService,
+    private boletosServ: BoletosService,
     private sorteosServ: SorteosService,
     private pagosServ: PagosService
   ) {}
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 
   listarClientes() {
     this.spinner.show();
-    this.boletosSer.listarPedido().then((data: any) => {
+    this.boletosServ.listarPedido().then((data: any) => {
       this.spinner.hide();
       if (data.clientes != null) {
         this.clientes = data.clientes;
@@ -56,16 +56,19 @@ export class HomeComponent implements OnInit {
         this.clientes = [];
         this.clientes2 = [];
       }
-      console.log(this.clientes);
     });
   }
 
   getItems(ev: any) {
     this.clientes = this.clientes2;
     if (ev && ev.trim() != '') {
-      this.clientes = this.clientes.filter((item) => {
-        return item.nombre.toLowerCase().indexOf(ev.toLowerCase()) > -1;
-      });
+      this.clientes = this.clientes.filter(
+        (item) =>
+          item.nombre?.toLowerCase().indexOf(ev.toLowerCase()) > -1 ||
+          item.celular?.toLowerCase().indexOf(ev.toLowerCase()) > -1 ||
+          item.correo?.toLowerCase().indexOf(ev.toLowerCase()) > -1 ||
+          item.boletosNum.includes(ev)
+      );
     }
   }
 
@@ -80,7 +83,7 @@ export class HomeComponent implements OnInit {
 
   listarBoletos() {
     this.spinner.show();
-    this.boletosSer.listarBoletos(this.clienteSelect).then((data: any) => {
+    this.boletosServ.listarBoletos(this.clienteSelect).then((data: any) => {
       this.spinner.hide();
       this.boletos = data.boletos;
     });
@@ -96,7 +99,7 @@ export class HomeComponent implements OnInit {
 
   guardarCupon() {
     this.spinner.show();
-    this.boletosSer.crearCupon(this.cupon).then(() => {
+    this.boletosServ.crearCupon(this.cupon).then(() => {
       this.spinner.hide();
       this.listarCupones();
       this.cupon = {};
@@ -105,7 +108,7 @@ export class HomeComponent implements OnInit {
 
   listarCupones() {
     this.spinner.show();
-    this.boletosSer.listarCupones().then((data: any) => {
+    this.boletosServ.listarCupones().then((data: any) => {
       this.spinner.hide();
       this.cupones = data.cupones;
     });
@@ -113,7 +116,7 @@ export class HomeComponent implements OnInit {
 
   eliminarCupon(cupon) {
     this.spinner.show();
-    this.boletosSer.eliminarCupon(cupon).then(() => {
+    this.boletosServ.eliminarCupon(cupon).then(() => {
       this.spinner.hide();
       this.listarCupones();
     });
@@ -155,6 +158,14 @@ export class HomeComponent implements OnInit {
   pagoManual(cliente) {
     this.spinner.show();
     this.pagosServ.pagoManual(cliente).then((data) => {
+      this.spinner.hide();
+      this.listarClientes();
+    });
+  }
+
+  liberarBoletos(id_cliente) {
+    this.spinner.show();
+    this.boletosServ.liberarBoletos({ id_cliente: id_cliente }).then(() => {
       this.spinner.hide();
       this.listarClientes();
     });

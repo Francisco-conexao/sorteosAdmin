@@ -18,6 +18,7 @@ body {
   --negro: #1a1f36;
   --morado: #180946;
   --rosa: #c92d64;
+  --azul: #3fe5e8;
 }
 
 .btn {
@@ -49,6 +50,16 @@ body {
     margin-top: -1px;
     white-space: nowrap;
   }
+}
+
+.btn_liberar {
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, #0084ff 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, #0084ff 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px, #0084ff 0px 3px 9px 0px,
+    #0084ff 0px 2px 5px 0px;
+
+  background: #0084ff !important;
+  color: #fff !important;
 }
 
 .btn_cancelar {

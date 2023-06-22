@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.spinner.hide();
         let datos: any = data;
         if (datos.status == 200) {
-          localStorage.setItem('MUBOCHI', JSON.stringify(datos.user));
+          localStorage.setItem('SORTEOS', JSON.stringify(datos.user));
           this.router.navigateByUrl('/app');
         } else if (datos.status == 300) {
           //   Swal.fire({

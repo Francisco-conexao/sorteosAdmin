@@ -2,7 +2,14 @@
   <div class="box_divider">
     <span class="seleccionados">Clientes</span>
     <span class="seleccionados">{{ clientes.length }}</span>
-    <button class="btn btn_cupones" (click)="openModalCupones(cuponesModal)">
+    <button class="btn btn-primary" (click)="listarClientes()">
+      Recargar Tabla
+    </button>
+    <button
+      class="btn btn_cupones"
+      style="margin-right: 10px"
+      (click)="openModalCupones(cuponesModal)"
+    >
       Cupones
     </button>
     <button
@@ -21,7 +28,7 @@
         placeholder="Buscar..."
         name="buscar"
       />
-      <img src="assets/icons/salir.png" (click)="getItems(null)" />
+      <img src="assets/icons/salir.png" (click)="getItems(null); buscar = ''" />
     </div>
   </div>
   <div class="box_table">
@@ -94,6 +101,16 @@
               (click)="pagoManual(cliente)"
             >
               Pagado
+            </button>
+          </td>
+          <td>
+            <button
+              class="btn btn_aceptar btn_liberar"
+              *ngIf="!cliente.pagado"
+              style="width: 100%"
+              (click)="liberarBoletos(cliente.id)"
+            >
+              Liberar
             </button>
           </td>
         </tr>
@@ -216,13 +233,23 @@
   <div class="modal-body">
     <form #form2="ngForm" class="datosCliente">
       <div class="row">
-        <div class="from-group col-lg-12">
+        <div class="from-group col-lg-9">
           <label>Sorteo</label>
           <input
             class="form-control"
             type="text"
             [(ngModel)]="sorteo.nombre"
             name="nombre"
+            required
+          />
+        </div>
+        <div class="from-group col-lg-3">
+          <label>Fecha cierre</label>
+          <input
+            class="form-control"
+            type="date"
+            [(ngModel)]="sorteo.fecha_fin"
+            name="fecha_fin"
             required
           />
         </div>
@@ -288,6 +315,7 @@
           <th>PRECIO2</th>
           <th>PRECIO3</th>
           <th>PRECIO4</th>
+          <th>FECHA CIERRE</th>
           <th></th>
         </tr>
       </thead>
@@ -299,6 +327,9 @@
           <td style="text-align: center">{{ sorteo.precio2 | currency }}</td>
           <td style="text-align: center">{{ sorteo.precio3 | currency }}</td>
           <td style="text-align: center">{{ sorteo.precio4 | currency }}</td>
+          <td style="text-align: center">
+            {{ sorteo.fecha_fin | date : "dd/MM/yyyy" }}
+          </td>
           <td style="text-align: center">
             <img
               src="assets/omitir.png"
