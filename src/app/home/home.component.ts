@@ -30,6 +30,10 @@ export class HomeComponent implements OnInit {
   sorteo: any = {};
   sorteos: any = [];
 
+  imagenSeleccionada: File = null;
+  imagenUrl: any = null;
+  imageInvalid: boolean = false;
+
   constructor(
     private modalService: NgbModal,
     private router: Router,
@@ -140,10 +144,14 @@ export class HomeComponent implements OnInit {
 
   crearSorteo() {
     this.spinner.show();
+    this.sorteo.imagenUrl = this.imagenUrl;
     this.sorteosServ.crear(this.sorteo).then((data: any) => {
       this.spinner.hide();
       this.listarSorteos();
       this.sorteo = {};
+      this.imagenSeleccionada = null;
+      this.imagenUrl = null;
+      this.imageInvalid = false;
     });
   }
 
@@ -169,5 +177,24 @@ export class HomeComponent implements OnInit {
       this.spinner.hide();
       this.listarClientes();
     });
+  }
+
+  onFileSelected(event) {
+    // Manejar el evento de cambio del input de tipo file
+    this.imagenSeleccionada = <File>event.target.files[0];
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.imagenSeleccionada);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result as string;
+
+      this.imagenUrl = event.target.result;
+      img.onload = (event) => {
+        img.width !== 450 || img.height !== 450
+          ? (this.imageInvalid = true)
+          : (this.imageInvalid = false);
+      };
+    };
   }
 }

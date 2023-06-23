@@ -232,6 +232,33 @@
   </div>
   <div class="modal-body">
     <form #form2="ngForm" class="datosCliente">
+      <div
+        class="row"
+        style="
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <img
+          *ngIf="imagenUrl"
+          [src]="imagenUrl"
+          alt="Vista previa de la imagen"
+          style="width: 150px; margin-bottom: 15px; border-radius: 20px"
+        />
+        <span class="alert_danger" *ngIf="imageInvalid"
+          >El tamaño de la imagen no es valido</span
+        >
+        <span class="alert_info" *ngIf="!imageInvalid"
+          >El tamaño de la imagen tiene que ser de 450px x 450px</span
+        >
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          style="font-size: 13px; margin-bottom: 20px"
+        />
+      </div>
       <div class="row">
         <div class="from-group col-lg-9">
           <label>Sorteo</label>
@@ -299,7 +326,7 @@
           <button
             class="btn btn_confirmar"
             (click)="crearSorteo()"
-            [disabled]="!form2.valid"
+            [disabled]="!form2.valid || imageInvalid || !imagenUrl"
           >
             Crear
           </button>
